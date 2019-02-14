@@ -1,0 +1,10 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: PROJECT_NAME-api-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "PROJECT_NAME-static-ip"
+spec:
+  backend:
+    serviceName: PROJECT_NAME-api-service  # service selector to expose
+    servicePort: 8082

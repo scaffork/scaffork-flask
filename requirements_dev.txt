@@ -1,0 +1,10 @@
+-r requirements.txt
+black==18.9b
+pylint==2.1.1
+pep8==1.7.1
+flake8==3.6.0
+tox==3.6.1
+pytest==4.1.0
+pytest-cov==2.6.1
+coverage==4.5.2
+requests_mock==1.5.2

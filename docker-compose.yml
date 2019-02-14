@@ -1,0 +1,12 @@
+version: "3.5"
+services:
+  app:
+    build: .
+    stdin_open: true
+    tty: true
+    ports:
+      - "${PORT}:${PORT}"
+    env_file: .env
+    volumes:
+      - .:/api
+    command: ["gunicorn", "-cfile:gunicorn_config.ini", "app:app"]

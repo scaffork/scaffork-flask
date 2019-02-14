@@ -1,0 +1,5 @@
+gunicorn==19.9.0
+requests==2.20.0
+Flask==1.0.2
+python-json-logger==0.1.10
+flask_log_request_id==0.10.0

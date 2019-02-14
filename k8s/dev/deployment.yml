@@ -1,0 +1,62 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:  # metadata of the deploy
+  name: PROJECT_NAME-api-deploy
+
+spec:
+  # how this deployment finds the pods to "deploy"
+  # replicas: 3
+  selector: 
+    matchLabels:
+      name: PROJECT_NAME-api-deploy
+
+  # pod template
+  template:
+    metadata:
+      labels:
+        name: PROJECT_NAME-api-deploy  # must be found by the deploy
+        environment: dev
+        tier: backend
+    spec:
+      containers:
+        - name: PROJECT_NAME
+          image: IMAGE_REPOSITORY/PROJECT_NAME:0.0.1
+          command: ["gunicorn", "-cfile:gunicorn_config.ini", "app:app"]
+
+          # internal env variables supplied by k8s
+          env:
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+
+          # pod env variables
+          envFrom:
+            - configMapRef:
+                name: PROJECT_NAME-api-configmap  # secret must have been created
+          ports: 
+            - name: http
+              containerPort: 5005
+          
+          # probes
+          livenessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            httpGet:
+              path: /healthcheck
+              port: 5005
+
+          readinessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            httpGet:
+              path: /healthcheck
+              port: 5005

@@ -1,0 +1,9 @@
+[run]
+omit = 
+    .venv/*
+    .tox/*
+    PROJECT_NAME/data
+    PROJECT_NAME/setup.py
+    
+[report]
+show_missing = True

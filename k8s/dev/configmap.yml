@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: PROJECT_NAME-api-configmap
+data:
+  FLASK_APP: 'app.py'
+  PORT: '5005'
+  DEBUG: 'True'
+  LOGGING_LEVEL: 'DEBUG'
+  WORKER_TIMEOUT: '3600'
+  PYTHONUNBUFFERED: '1'

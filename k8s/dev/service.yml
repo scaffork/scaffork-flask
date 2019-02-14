@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: PROJECT_NAME-api-service
+  labels:
+    name: PROJECT_NAME-api-service
+  
+# deployment selector to expose the deploy object (pods)
+spec:
+  selector: 
+    name: PROJECT_NAME-api-deploy
+  type: NodePort  # internal port
+  ports:
+    - name: http
+      port: 8082  # exposed port for other services
+      targetPort: 5005  # pod internal ports
